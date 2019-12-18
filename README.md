@@ -13,7 +13,7 @@ python3 samples/coco/coco.py train --dataset=/path/to/dataset/ --model=last
 
 # output .json (for VRDL HW4)
 ```
-python3 samples/coco/coco_eval.py json --dataset=/path/to/dataset/ --model=last
+python3 samples/coco/coco.py json --dataset=/path/to/dataset/ --model=last
 ```
 
 # Mask R-CNN for Object Detection and Segmentation
