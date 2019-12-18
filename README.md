@@ -1,5 +1,7 @@
 # training with own dataset (what I use in VRDL HW4)
 ```
+# You can change the path of test dataset in coco.py
+
 # Train a new model starting from ImageNet weights
 python3 samples/coco/coco.py train --dataset=/path/to/dataset/ --model=imagenet
 
@@ -13,7 +15,8 @@ python3 samples/coco/coco.py train --dataset=/path/to/dataset/ --model=last
 
 # output .json (for VRDL HW4)
 ```
-python3 samples/coco/coco.py json --dataset=/path/to/dataset/ --model=last
+# You can change the path of test dataset in coco.py
+python3 samples/coco/coco.py json --model=last
 ```
 
 # Mask R-CNN for Object Detection and Segmentation
