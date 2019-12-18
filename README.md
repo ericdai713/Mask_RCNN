@@ -1,3 +1,21 @@
+# training with own dataset (what I use in VRDL HW4)
+```
+# Train a new model starting from ImageNet weights
+python3 samples/coco/coco.py train --dataset=/path/to/dataset/ --model=imagenet
+
+# Continue training a model that you had trained earlier
+python3 samples/coco/coco.py train --dataset=/path/to/dataset/ --model=/path/to/weights.h5
+
+# Continue training the last model you trained. This will find
+# the last trained weights in the model directory.
+python3 samples/coco/coco.py train --dataset=/path/to/dataset/ --model=last
+```
+
+# output .json (for VRDL HW4)
+```
+python3 samples/coco/coco_eval.py json --dataset=/path/to/dataset/ --model=last
+```
+
 # Mask R-CNN for Object Detection and Segmentation
 
 This is an implementation of [Mask R-CNN](https://arxiv.org/abs/1703.06870) on Python 3, Keras, and TensorFlow. The model generates bounding boxes and segmentation masks for each instance of an object in the image. It's based on Feature Pyramid Network (FPN) and a ResNet101 backbone.
