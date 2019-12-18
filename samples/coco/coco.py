@@ -529,6 +529,40 @@ if __name__ == '__main__':
         dataset_val.prepare()
         print("Running COCO evaluation on {} images.".format(args.limit))
         evaluate_coco(model, dataset_val, coco, "bbox", limit=int(args.limit))
+    elif args.command == "json":
+		cocoGt = COCO("./annotations/test.json")
+		coco_dt = []
+		current = 0
+		for imgid in cocoGt.imgs:
+			# Load image
+			print(current)
+			print(cocoGt.loadImgs(ids=imgid)[0]['file_name'])
+			image = load_image("test_images/" + cocoGt.loadImgs(ids=imgid)[0]['file_name'])
+			r = model.detect([image], verbose=0)[0]
+
+			rois = r["rois"]
+			class_ids = r["class_ids"]
+			masks = r["masks"]
+			scores = r["scores"]
+
+			if len(rois) > 0: # If any objects are detected in this image
+				for i in range(rois.shape[0]): # Loop all instances
+					# save information of the instance in a dictionary then append on coco_dt list
+					pred = {}
+					class_id = class_ids[i]
+					#print(class_id)
+					mask = masks[:, :, i]
+					score = float(scores[i])
+					pred['image_id'] = int(imgid) # this imgid must be same as the key of test.json
+					pred['category_id'] = int(class_id)
+					pred['segmentation'] = binary_mask_to_rle(mask)  # save binary mask to RLE, e.g. 512x512 -> rle
+					pred['score'] = float(score)
+					coco_dt.append(pred)
+
+			current = current + 1  
+		print("output json...")
+		with open("0856612.json", "w") as f:
+			json.dump(coco_dt, f)
     else:
         print("'{}' is not recognized. "
               "Use 'train' or 'evaluate'".format(args.command))
